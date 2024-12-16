@@ -1,0 +1,5 @@
+sql.password = Idngafatp888
+sql.host = localhost
+sql.username = postgres
+sql.database = TeammateFinder
+sql.port = localhost
