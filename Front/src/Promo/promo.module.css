@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Paytone+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Paytone+One&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+.Promo {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../assets/background-image.jpg');
+    background-position: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.Logo {
+    justify-self: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.LogoText {
+    color: #000;
+    font-family: "Paytone One";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 90%;
+}
+
+.ContactButton {
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.LoginButton {
+    position: relative;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: white;
+    z-index: 1;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    transition: 1s;
+}
+
+.LoginButton:hover {
+    background: #fff;
+}
+
+.LoginButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, #34BD4A, #185722);
+    z-index: -1;
+    border-radius: 15px;
+    padding: 3px;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); 
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    transition: mask 0.5s, opacity 0.5s;
+    opacity: 1;
+    transform: scale(1)
+}
+
+.LoginButton:hover::before {
+    opacity: 0;
+    transform: scale(1)
+}
+
+
+.SignUpButton {
+    width: auto;
+    padding: 10px 20px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    border-radius: 15px;
+    background: #000;
+    overflow: hidden;
+    border: none;
+    transition: 0.5s;
+}
+
+.SignUpButton:hover {
+    background-color: #34BD4A;
+}
+
+.SignUpText {
+    color: #FFF;
+    font-family: "Dela Gothic One";
+    font-size: 24px;
+    font-weight: 400;
+    line-height: normal;
+    white-space: nowrap;
+}
+
+.LoginText {
+    color: #000000;
+    font-family: "Dela Gothic One";
+    font-size: 24px;
+    font-weight: 400;
+    line-height: normal;
+    white-space: nowrap;
+    transition: 0.5s;
+}
+
+.LoginText:hover {
+    color:#34BD4A;
+}
+
+.ContactText {
+    color: #000;
+    text-align: center;
+    font-family: "Dela Gothic One";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    transition: 0.5s;
+}
+
+.ContactText:hover {
+    color:#34BD4A; 
+}
+
+.PromoBody {
+    width: 100%;
+    background-repeat: no-repeat;
+    padding-left: 60px;
+    background-origin: content-box;
+}
+
+.HeaderButtonsContainer {
+    display: flex;
+    gap: 30px;
+}
+
+.PromoHeader {
+    display: grid;
+    justify-items: right;
+    grid-template-columns: 50% 50%;
+    padding: 40px;
+    align-items: center;
+}
+
+.UpperText {
+    padding-top: 200px;
+    color: #000;
+    font-family: "Dela Gothic One";
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-wrap: nowrap;
+}
+
+.BottomText {
+    padding-top: 45px;
+    font-size: 24px;
+    font-family: "Dela Gothic One";
+    font-weight: '400';
+    word-wrap: break-word;
+    line-height: 95%;
+}
+
+.FirstBottom {
+    color:#185722;
+}
+
+.SecondBottom {
+    color: #28943A;
+    padding-left: 10%;
+}
+
+.ThirdBottom {
+    color:#34BD4A;
+    padding-left: 20%;
+}
+
+.ButtonBg {
+    display: flex;
+    width: 520px;
+    height: 108px;
+    overflow: hidden;
+    margin-top: 60px;
+    border: none;
+    border-radius: 45px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.00) 30%, rgba(0, 0, 0, 0.12) 72.5%, rgba(0, 0, 0, 0.20) 100%), #34BD4A;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.ButtonBg:hover {
+    background: #FFF;
+}
+
+.MainButtonText {
+    color: #FFF;
+    text-shadow: 4px 4px 4px rgba(5, 255, 0, 0.10);
+    font-family: "Dela Gothic One";
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 10px;
+    transition: 0.5s;
+}
+
+.MainButtonText:hover {
+    color:#34BD4A;
+}
+
+.LightboxButtonsContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.LightboxButton{
+    display: block;
+}
+
+.LightboxButtonMain{
+    display: block;
+    min-width: 80%;
+}
+
+.LightboxInputsContainer{
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+
