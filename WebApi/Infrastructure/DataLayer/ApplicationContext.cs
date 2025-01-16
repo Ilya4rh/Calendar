@@ -6,6 +6,8 @@ namespace Infrastructure;
 public class ApplicationContext : DbContext
 {
     public DbSet<UserEntity> Users { get; set; } = null!;
+
+    public DbSet<EventEntity> Events { get; set; } = null!;
  
     public ApplicationContext()
     {
@@ -22,5 +24,5 @@ public class ApplicationContext : DbContext
             UserName = "postgres"
         };
         optionsBuilder.UseNpgsql(connectionString.Build());
-    }
+    }   
 }

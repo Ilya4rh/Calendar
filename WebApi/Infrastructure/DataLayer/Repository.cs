@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Infrastructure.Entities;
 
 namespace Infrastructure;
 
@@ -23,8 +22,21 @@ public abstract class Repository<TEntity> where TEntity: Entity
         applicationContext.SaveChanges();
         return entry.Entity;
     }
+    
+    public TEntity Update(TEntity entity)
+    {
+        var context = new ValidationContext(entity);
+        var results = new List<ValidationResult>();
 
-    public IQueryable<TEntity> Get()
+        if (!Validator.TryValidateObject(entity, context, results, true))
+            throw new ValidationException();
+        
+        var entry = applicationContext.Update(entity);
+        applicationContext.SaveChanges();
+        return entry.Entity;
+    }
+    
+    protected IQueryable<TEntity> Get()
     {
         return applicationContext.Set<TEntity>();
     }
