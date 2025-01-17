@@ -8,7 +8,7 @@ public class EventEntity : Entity
     
     public DateTime EndDateTime { get; init; }
     
-    public int Repeat { get; init; }
+    public int? RepeatId { get; init; }
     
     public string? Description { get; init; }
     
