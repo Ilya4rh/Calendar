@@ -4,6 +4,8 @@ public class EventEntity : Entity
 {
     public Guid CreatorId { get; init; }
     
+    public string Title { get; init; }
+    
     public DateTime StartDateTime { get; init; }
     
     public DateTime EndDateTime { get; init; }

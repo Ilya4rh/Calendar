@@ -12,7 +12,7 @@ public class EventService
         this.eventRepository = eventRepository;
     }
 
-    public List<EventEntity> GetEventByCreatorId(Guid creatorId)
+    public List<EventEntity> GetEventsByCreatorId(Guid creatorId)
     {
         return eventRepository.GetByCreatorId(creatorId).ToList();
     }
@@ -22,7 +22,17 @@ public class EventService
         return eventRepository.GetById(id);
     }
     
-    // public EventEntity CreateEvent()
-    // {
-    // }
+    public Guid CreateEvent(EventEntity eventEntity)
+    {
+        var newEvent = eventRepository.Save(eventEntity);
+
+        return newEvent.Id;
+    }
+
+    public EventEntity ChangeEvent(EventEntity eventEntity)
+    {
+        var changedEvent = eventRepository.Update(eventEntity);
+
+        return changedEvent;
+    }
 }

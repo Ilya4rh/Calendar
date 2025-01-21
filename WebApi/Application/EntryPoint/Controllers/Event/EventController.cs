@@ -1,4 +1,5 @@
 ﻿using Core.Event;
+using Infrastructure.Entities;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Controllers.Event.Models.Requests;
 using WebApplication1.Controllers.Event.Models.Responses;
@@ -17,45 +18,58 @@ public class EventController
     }
 
     [HttpGet]
-    public ActionResult<List<EventResponse>> GetEventsByCreatorId([FromQuery] Guid creatorId)
+    public ActionResult<List<EventEntity>> GetEventsByCreatorId([FromQuery] Guid creatorId)
     {
-        return new List<EventResponse>();
+        var events = eventService.GetEventsByCreatorId(creatorId);
+        
+        return events;
     }
 
     [HttpGet]
-    public ActionResult<EventResponse> GetEventById([FromQuery] Guid id)
+    public ActionResult<EventEntity> GetEventById([FromQuery] Guid id)
     {
-        return new EventResponse
-        {
-            Id = default,
-            CreatorId = default,
-            StartDateTime = default,
-            EndDateTime = default,
-            Repeat = 0,
-            Description = null,
-            GuestIds = []
-        };
+        var eventById = eventService.GetEventById(id);
+        
+        return eventById;
     }
 
     [HttpPost]
     public ActionResult<Guid> CreateEvent([FromBody] CreateEventRequest request)
     {
-        return Guid.Empty;
+        var eventForCreate = new EventEntity
+        {
+            CreatorId = request.CreatorId,
+            Title = request.Title,
+            StartDateTime = request.StartDateTime,
+            EndDateTime = request.EndDateTime,
+            RepeatId = request.RepeatId,
+            Description = request.Description,
+            GuestIds = request.GuestIds
+        };
+
+        var idNewEvent = eventService.CreateEvent(eventForCreate);
+        
+        return idNewEvent;
     }
 
     [HttpPut]
-    public ActionResult<EventResponse> ChangeEvent([FromBody] ChangeEventRequest request)
+    public ActionResult<EventEntity> ChangeEvent([FromBody] ChangeEventRequest request)
     {
-        return new EventResponse
+        var eventForChange = new EventEntity
         {
-            Id = default,
-            CreatorId = default,
-            StartDateTime = default,
-            EndDateTime = default,
-            Repeat = 0,
-            Description = null,
-            GuestIds = []
+            Id = request.Id,
+            CreatorId = request.CreatorId,
+            Title = request.Title,
+            StartDateTime = request.StartDateTime,
+            EndDateTime = request.EndDateTime,
+            RepeatId = request.RepeatId,
+            Description = request.Description,
+            GuestIds = request.GuestIds
         };
+
+        var changedEvent = eventService.ChangeEvent(eventForChange);
+        
+        return changedEvent;
     }
 
     [HttpDelete]
