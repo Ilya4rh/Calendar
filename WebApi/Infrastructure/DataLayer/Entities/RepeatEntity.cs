@@ -12,5 +12,5 @@ public class RepeatEntity : Entity
     
     public int? Interval { get; init; }
     
-    public IntervalTypes? IntervalType { get; init; }
+    public IntervalTypes IntervalType { get; init; }
 }
