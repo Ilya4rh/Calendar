@@ -1,37 +1,56 @@
-﻿using Infrastructure.Entities;
+﻿using Core.Event.Models;
+using Core.Extensions;
+using Infrastructure.Entities;
 using Infrastructure.Repositories;
 
 namespace Core.Event;
 
 public class EventService
 {
-    private readonly EventRepository eventRepository;
+    private readonly EventRepository _eventRepository;
 
-    public EventService(EventRepository eventRepository)
+    private readonly RepeatRepository _repeatRepository;
+
+    public EventService(EventRepository eventRepository, RepeatRepository repeatRepository)
     {
-        this.eventRepository = eventRepository;
+        _eventRepository = eventRepository;
+        _repeatRepository = repeatRepository;
     }
 
-    public List<EventEntity> GetEventsByCreatorId(Guid creatorId)
+    public List<EventDto> GetEventsByCreatorId(Guid creatorId)
     {
-        return eventRepository.GetByCreatorId(creatorId).ToList();
+        var events = _eventRepository.GetByCreatorId(creatorId).ToList();
+        var eventsDto = new List<EventDto>();
+        
+        foreach (var eventEntity in events)
+        {
+            var repeat = eventEntity.RepeatId == null ? null : _repeatRepository.GetById(eventEntity.RepeatId.Value);
+            
+            eventsDto.Add(eventEntity.ConvertToEventDto(repeat));
+        }
+
+        return eventsDto;
     }
 
-    public EventEntity GetEventById(Guid id)
+    public EventDto GetEventById(Guid id)
     {
-        return eventRepository.GetById(id);
+        var eventEntity = _eventRepository.GetById(id);
+
+        var repeat = eventEntity.RepeatId == null ? null : _repeatRepository.GetById(eventEntity.RepeatId.Value);
+        
+        return eventEntity.ConvertToEventDto(repeat);
     }
     
     public Guid CreateEvent(EventEntity eventEntity)
     {
-        var newEvent = eventRepository.Save(eventEntity);
+        var newEvent = _eventRepository.Save(eventEntity);
 
         return newEvent.Id;
     }
 
     public EventEntity ChangeEvent(EventEntity eventEntity)
     {
-        var changedEvent = eventRepository.Update(eventEntity);
+        var changedEvent = _eventRepository.Update(eventEntity);
 
         return changedEvent;
     }

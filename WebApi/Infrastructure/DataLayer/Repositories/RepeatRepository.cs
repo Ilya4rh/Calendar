@@ -7,8 +7,9 @@ public class RepeatRepository: Repository<RepeatEntity>
     public RepeatRepository(ApplicationContext applicationContext) : base(applicationContext)
     {
     }
-    public RepeatEntity GetById(Guid id)
+    
+    public RepeatEntity? GetById(Guid id)
     {
-        return Get().Single(eventEntity => eventEntity.Id == id);
+        return Get().SingleOrDefault(repeatEntity => repeatEntity.Id == id);
     }
 }

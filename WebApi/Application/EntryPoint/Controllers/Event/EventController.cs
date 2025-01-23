@@ -1,8 +1,8 @@
 ﻿using Core.Event;
+using Core.Event.Models;
 using Infrastructure.Entities;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication1.Controllers.Event.Models.Requests;
-using WebApplication1.Controllers.Event.Models.Responses;
 
 namespace WebApplication1.Controllers.Event;
 
@@ -10,27 +10,27 @@ namespace WebApplication1.Controllers.Event;
 [ApiController]
 public class EventController
 {
-    private readonly EventService eventService;
+    private readonly EventService _eventService;
 
     public EventController(EventService eventService)
     {
-        this.eventService = eventService;
+        _eventService = eventService;
     }
 
     [HttpGet]
-    public ActionResult<List<EventEntity>> GetEventsByCreatorId([FromQuery] Guid creatorId)
+    public ActionResult<List<EventDto>> GetEventsByCreatorId([FromQuery] Guid creatorId)
     {
-        var events = eventService.GetEventsByCreatorId(creatorId);
+        var events = _eventService.GetEventsByCreatorId(creatorId);
         
         return events;
     }
 
     [HttpGet]
-    public ActionResult<EventEntity> GetEventById([FromQuery] Guid id)
+    public ActionResult<EventDto> GetEventById([FromQuery] Guid id)
     {
-        var eventById = eventService.GetEventById(id);
+        var eventDto = _eventService.GetEventById(id);
         
-        return eventById;
+        return eventDto;
     }
 
     [HttpPost]
@@ -42,12 +42,12 @@ public class EventController
             Title = request.Title,
             StartDateTime = request.StartDateTime,
             EndDateTime = request.EndDateTime,
-            RepeatId = request.RepeatId,
+            RepeatId = request.Repeat?.Id,
             Description = request.Description,
             GuestIds = request.GuestIds
         };
 
-        var idNewEvent = eventService.CreateEvent(eventForCreate);
+        var idNewEvent = _eventService.CreateEvent(eventForCreate);
         
         return idNewEvent;
     }
@@ -62,12 +62,12 @@ public class EventController
             Title = request.Title,
             StartDateTime = request.StartDateTime,
             EndDateTime = request.EndDateTime,
-            RepeatId = request.RepeatId,
+            RepeatId = request.Repeat?.Id,
             Description = request.Description,
             GuestIds = request.GuestIds
         };
 
-        var changedEvent = eventService.ChangeEvent(eventForChange);
+        var changedEvent = _eventService.ChangeEvent(eventForChange);
         
         return changedEvent;
     }

@@ -1,12 +1,14 @@
 ﻿using Infrastructure.Entities;
 
-namespace WebApplication1.Controllers.Event.Models.Requests;
+namespace Core.Event.Models;
 
-public record CreateEventRequest
+public record EventDto
 {
-    public required Guid CreatorId { get; init; }
+    public required Guid Id { get; init; }
     
-    public string Title { get; init; }
+    public required string? Title { get; init; }
+    
+    public required Guid CreatorId { get; init; }
     
     public required DateTime StartDateTime { get; init; }
     

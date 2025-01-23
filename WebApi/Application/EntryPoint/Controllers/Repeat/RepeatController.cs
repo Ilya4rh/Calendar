@@ -31,7 +31,6 @@ public class RepeatController: ControllerBase
         {
             DateStart = request.DateStart,
             DateEnd = request.DateEnd,
-            Days = request.Days,
             Interval = request.Interval,
             IntervalType = request.IntervalType,
         };
@@ -48,7 +47,6 @@ public class RepeatController: ControllerBase
         {
             DateStart = request.DateStart,
             DateEnd = request.DateEnd,
-            Days = request.Days,
             Interval = request.Interval,
             IntervalType = request.IntervalType,
         };

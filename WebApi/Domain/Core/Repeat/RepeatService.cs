@@ -14,8 +14,8 @@ public class RepeatService
 
     public Guid AddRepeat(RepeatEntity repeat)
     {
-        repeatRepository.Save(repeat);
-        return repeat.Id;
+        var newRepeat = repeatRepository.Save(repeat);
+        return newRepeat.Id;
     }
 
     public RepeatEntity? GetRepeatById(Guid id)

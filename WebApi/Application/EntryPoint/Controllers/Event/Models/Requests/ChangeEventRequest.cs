@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Controllers.Event.Models.Requests;
+﻿using Infrastructure.Entities;
+
+namespace WebApplication1.Controllers.Event.Models.Requests;
 
 public record ChangeEventRequest
 {
@@ -12,7 +14,7 @@ public record ChangeEventRequest
     
     public required DateTime EndDateTime { get; init; }
     
-    public required int RepeatId { get; init; }
+    public required RepeatEntity? Repeat { get; init; }
     
     public required string? Description { get; init; }
     

@@ -1,3 +1,6 @@
+using Core.Event;
+using Core.Repeat;
+using Core.Task;
 using Core.User;
 using Infrastructure;
 using Infrastructure.Repositories;
@@ -10,12 +13,18 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddSingleton<UserRepository>();
+builder.Services.AddSingleton<EventRepository>();
+builder.Services.AddSingleton<RepeatRepository>();
+builder.Services.AddSingleton<TaskRepository>();
 builder.Services.AddTransient<ApplicationContext>();
 builder.Services.AddScoped<JwtProvider>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddAuth();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<UserService>();
+builder.Services.AddSingleton<UserService>();
+builder.Services.AddSingleton<EventService>();
+builder.Services.AddSingleton<RepeatService>();
+builder.Services.AddSingleton<TaskService>();
 builder.Services.AddCors();
 
 var app = builder.Build();

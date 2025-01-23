@@ -8,6 +8,10 @@ public class ApplicationContext : DbContext
     public DbSet<UserEntity> Users { get; set; } = null!;
 
     public DbSet<EventEntity> Events { get; set; } = null!;
+
+    public DbSet<TaskEntity> Tasks { get; set; } = null!;
+
+    public DbSet<RepeatEntity> Repeats { get; set; } = null!;
  
     public ApplicationContext()
     {
@@ -17,11 +21,11 @@ public class ApplicationContext : DbContext
     {
         var connectionString = new ConnectionString
         {
-            DatabaseName = "team",
+            DatabaseName = "calendar",
             Host = "localhost",
-            Port = "5432",
-            Password = "postgres",
-            UserName = "postgres"
+            Port = "5435",
+            Password = "calendar",
+            UserName = "calendar"
         };
         optionsBuilder.UseNpgsql(connectionString.Build());
     }   

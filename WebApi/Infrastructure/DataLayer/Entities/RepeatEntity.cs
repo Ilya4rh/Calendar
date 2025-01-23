@@ -7,8 +7,6 @@ public class RepeatEntity : Entity
     public DateTime DateStart { get; init; }
 
     public DateTime? DateEnd { get; init; }
-
-    public DayOfWeek[]? Days { get; init; }
     
     public int? Interval { get; init; }
     

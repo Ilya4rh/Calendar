@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Controllers.Event.Models.Responses;
+﻿using Infrastructure.Entities;
+
+namespace WebApplication1.Controllers.Event.Models.Responses;
 
 public record EventResponse
 {
@@ -12,7 +14,7 @@ public record EventResponse
     
     public required DateTime EndDateTime { get; init; }
     
-    public required int? RepeatId { get; init; }
+    public required RepeatEntity Repeat { get; init; }
     
     public required string? Description { get; init; }
     
