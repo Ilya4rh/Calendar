@@ -1,8 +1,8 @@
 ﻿using Core.Event;
 using Core.Event.Models;
-using Infrastructure.Entities;
+using Core.Repeat.Models;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Controllers.Event.Models.Requests;
+using WebApplication1.Controllers.Event.Models.EventModels.Requests;
 
 namespace WebApplication1.Controllers.Event;
 
@@ -18,7 +18,7 @@ public class EventController
     }
 
     [HttpGet]
-    public ActionResult<List<EventDto>> GetEventsByCreatorId([FromQuery] Guid creatorId)
+    public ActionResult<List<EventDto>> GetEventsByCreatorIdForYear([FromQuery] Guid creatorId)
     {
         var events = _eventService.GetEventsByCreatorId(creatorId);
         
@@ -36,35 +36,77 @@ public class EventController
     [HttpPost]
     public ActionResult<Guid> CreateEvent([FromBody] CreateEventRequest request)
     {
-        var eventForCreate = new EventEntity
+        RepeatDto? repeatDto = null;
+
+        if (request.RepeatRequest != null)
+        {
+            var repeatRequest = request.RepeatRequest;
+            repeatDto = new RepeatDto
+            {
+                DateStart = repeatRequest.DateStart,
+                DateEnd = repeatRequest.DateEnd,
+                Interval = repeatRequest.Interval,
+                IntervalType = repeatRequest.IntervalType
+            };
+        }
+        
+        var eventDtoForCreate = new EventDto
         {
             CreatorId = request.CreatorId,
             Title = request.Title,
             StartDateTime = request.StartDateTime,
             EndDateTime = request.EndDateTime,
-            RepeatId = request.Repeat?.Id,
-            Description = request.Description,
+            Repeat = repeatDto,
             GuestIds = request.GuestIds
         };
 
-        var idNewEvent = _eventService.CreateEvent(eventForCreate);
+        var idNewEvent = _eventService.CreateEvent(eventDtoForCreate);
         
         return idNewEvent;
     }
 
     [HttpPut]
-    public ActionResult<EventEntity> ChangeEvent([FromBody] ChangeEventRequest request)
+    public ActionResult<EventDto> ChangeEvent([FromBody] ChangeEventRequest request)
     {
-        var eventForChange = new EventEntity
+        RepeatDto? repeatDto = null;
+
+        if (request.RepeatRequest != null)
+        {
+            var repeatRequest = request.RepeatRequest;
+
+            if (repeatRequest.Id == null)
+            {
+                repeatDto = new RepeatDto
+                {
+                    DateStart = repeatRequest.DateStart,
+                    DateEnd = repeatRequest.DateEnd,
+                    Interval = repeatRequest.Interval,
+                    IntervalType = repeatRequest.IntervalType
+                };
+            }
+            else
+            {
+                repeatDto = new RepeatDto
+                {
+                    Id = repeatRequest.Id.Value,
+                    DateStart = repeatRequest.DateStart,
+                    DateEnd = repeatRequest.DateEnd,
+                    Interval = repeatRequest.Interval,
+                    IntervalType = repeatRequest.IntervalType
+                };
+            }
+            
+        }
+        
+        var eventForChange = new EventDto
         {
             Id = request.Id,
             CreatorId = request.CreatorId,
             Title = request.Title,
             StartDateTime = request.StartDateTime,
             EndDateTime = request.EndDateTime,
-            RepeatId = request.Repeat?.Id,
-            Description = request.Description,
-            GuestIds = request.GuestIds
+            Repeat = repeatDto,
+            GuestIds = request.GuestIds,
         };
 
         var changedEvent = _eventService.ChangeEvent(eventForChange);

@@ -1,4 +1,6 @@
 using Core.Event;
+using Core.Event.Models;
+using Core.Generator;
 using Core.Repeat;
 using Core.Task;
 using Core.User;
@@ -25,6 +27,7 @@ builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<EventService>();
 builder.Services.AddSingleton<RepeatService>();
 builder.Services.AddSingleton<TaskService>();
+builder.Services.AddSingleton<IGenerator<EventDto>, EventGenerator>();
 builder.Services.AddCors();
 
 var app = builder.Build();

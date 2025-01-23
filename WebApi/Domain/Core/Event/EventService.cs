@@ -1,6 +1,6 @@
 ﻿using Core.Event.Models;
 using Core.Extensions;
-using Infrastructure.Entities;
+using Core.Generator;
 using Infrastructure.Repositories;
 
 namespace Core.Event;
@@ -11,10 +11,13 @@ public class EventService
 
     private readonly RepeatRepository _repeatRepository;
 
-    public EventService(EventRepository eventRepository, RepeatRepository repeatRepository)
+    private readonly IGenerator<EventDto> _generator;
+
+    public EventService(EventRepository eventRepository, RepeatRepository repeatRepository, IGenerator<EventDto> generator)
     {
         _eventRepository = eventRepository;
         _repeatRepository = repeatRepository;
+        _generator = generator;
     }
 
     public List<EventDto> GetEventsByCreatorId(Guid creatorId)
@@ -26,7 +29,12 @@ public class EventService
         {
             var repeat = eventEntity.RepeatId == null ? null : _repeatRepository.GetById(eventEntity.RepeatId.Value);
             
-            eventsDto.Add(eventEntity.ConvertToEventDto(repeat));
+            eventsDto.Add(eventEntity.ToDto(repeat?.ToDto()));
+        }
+
+        foreach (var eventDto in eventsDto.ToList())
+        {
+            eventsDto.AddRange(_generator.Generate(eventDto));
         }
 
         return eventsDto;
@@ -38,20 +46,44 @@ public class EventService
 
         var repeat = eventEntity.RepeatId == null ? null : _repeatRepository.GetById(eventEntity.RepeatId.Value);
         
-        return eventEntity.ConvertToEventDto(repeat);
-    }
-    
-    public Guid CreateEvent(EventEntity eventEntity)
-    {
-        var newEvent = _eventRepository.Save(eventEntity);
-
-        return newEvent.Id;
+        return eventEntity.ToDto(repeat?.ToDto());
     }
 
-    public EventEntity ChangeEvent(EventEntity eventEntity)
+    public Guid CreateEvent(EventDto eventDto)
     {
-        var changedEvent = _eventRepository.Update(eventEntity);
+        Guid? newRepeatId = null; 
+        
+        if (eventDto.Repeat != null)
+        {
+            var newRepeat = _repeatRepository.Save(eventDto.Repeat.ToEntity());
+            newRepeatId = newRepeat.Id;
+        }
 
-        return changedEvent;
+        var newEventId = _eventRepository.Save(eventDto.ToEntity(newRepeatId));
+
+        return newEventId.Id;
+    }
+
+    public EventDto ChangeEvent(EventDto eventDto)
+    {
+        var repeatDto = eventDto.Repeat;
+            
+        if (repeatDto != null)
+        {
+            if (repeatDto.Id == Guid.Empty)
+            {
+                var newRepeat = _repeatRepository.Save(repeatDto.ToEntity());
+                repeatDto = newRepeat.ToDto();
+            }
+            else
+            {
+                var changedRepeat = _repeatRepository.Update(repeatDto.ToEntity());
+                repeatDto = changedRepeat.ToDto();
+            }
+        }
+
+        var changedEvent = _eventRepository.Update(eventDto.ToEntity(repeatDto?.Id));
+
+        return changedEvent.ToDto(repeatDto);
     }
 }

@@ -1,10 +1,11 @@
-﻿using Infrastructure.Entities;
+﻿using Core.Repeat.Models;
+using Infrastructure.Entities;
 
 namespace Core.Event.Models;
 
 public record EventDto
 {
-    public required Guid Id { get; init; }
+    public Guid Id { get; init; }
     
     public required string? Title { get; init; }
     
@@ -14,9 +15,7 @@ public record EventDto
     
     public required DateTime EndDateTime { get; init; }
     
-    public required RepeatEntity? Repeat { get; init; }
-    
-    public required string? Description { get; init; }
+    public required RepeatDto? Repeat { get; init; }
     
     public required Guid[]? GuestIds { get; init; }
 }

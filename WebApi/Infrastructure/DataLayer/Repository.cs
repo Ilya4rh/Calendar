@@ -35,9 +35,20 @@ public abstract class Repository<TEntity> where TEntity: Entity
         if (!Validator.TryValidateObject(entity, context, results, true))
             throw new ValidationException();
         
-        var entry = _applicationContext.Update(entity);
+        var trackedEntity = _applicationContext.Set<TEntity>().Local.FirstOrDefault(e => e.Id == entity.Id);
+        if (trackedEntity != null)
+        {
+            _applicationContext.Entry(trackedEntity).CurrentValues.SetValues(entity);
+        }
+        else
+        {
+            _applicationContext.Attach(entity);
+            _applicationContext.Entry(entity).State = EntityState.Modified;
+        }
+
         _applicationContext.SaveChanges();
-        return entry.Entity;
+
+        return entity;
     }
     
     protected IQueryable<TEntity> Get()

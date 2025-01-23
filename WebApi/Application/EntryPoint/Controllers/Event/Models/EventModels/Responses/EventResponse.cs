@@ -1,18 +1,20 @@
 ﻿using Infrastructure.Entities;
 
-namespace WebApplication1.Controllers.Event.Models.Requests;
+namespace WebApplication1.Controllers.Event.Models.EventModels.Responses;
 
-public record CreateEventRequest
+public record EventResponse
 {
-    public required Guid CreatorId { get; init; }
+    public required Guid Id { get; init; }
     
     public string Title { get; init; }
+    
+    public required Guid CreatorId { get; init; }
     
     public required DateTime StartDateTime { get; init; }
     
     public required DateTime EndDateTime { get; init; }
     
-    public required RepeatEntity? Repeat { get; init; }
+    public required RepeatEntity Repeat { get; init; }
     
     public required string? Description { get; init; }
     
