@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using WebApplication1.Services;
 
-namespace Infrastructure;
+namespace WebApplication1.Services;
 
 public static class AuthExtension
 {

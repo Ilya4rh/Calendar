@@ -2,11 +2,12 @@
 
 public class TaskEntity : Entity
 {
+    public string Title { get; set; }
     public Guid CreatorId { get; init; }
     
     public DateTime DateTime { get; init; }
     
-    public int Repeat { get; init; }
+    public Guid? RepeatId { get; set; }
     
-    public string? Description { get; init; }
+    public string? Description { get; set; }
 }
