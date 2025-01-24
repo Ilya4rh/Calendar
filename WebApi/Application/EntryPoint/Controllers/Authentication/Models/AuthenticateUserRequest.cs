@@ -1,3 +1,3 @@
-﻿namespace WebApplication1.Controllers.User.Models;
+﻿namespace EntryPoint.Controllers.Authentication.Models;
 
 public record AuthenticateUserRequest(string Email, string Password);

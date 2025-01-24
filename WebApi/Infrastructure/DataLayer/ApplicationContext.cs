@@ -9,13 +9,10 @@ public class ApplicationContext : DbContext
 
     public DbSet<EventEntity> Events { get; set; } = null!;
 
-    public DbSet<TaskEntity> Tasks { get; set; } = null!;
-
     public DbSet<RepeatEntity> Repeats { get; set; } = null!;
  
     public ApplicationContext()
     {
-        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

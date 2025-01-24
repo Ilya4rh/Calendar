@@ -1,122 +1,47 @@
 ﻿using Core.Event;
 using Core.Event.Models;
-using Core.Repeat.Models;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Controllers.Event.Models.EventModels.Requests;
 
-namespace WebApplication1.Controllers.Event;
+namespace EntryPoint.Controllers.Event;
 
 [Route("[controller]/[action]")]
 [ApiController]
-public class EventController
+public class EventController: ControllerBase
 {
-    private readonly EventService _eventService;
+    private readonly EventService eventService;
 
     public EventController(EventService eventService)
     {
-        _eventService = eventService;
+        this.eventService = eventService;
     }
 
     [HttpGet]
-    public ActionResult<List<EventDto>> GetEventsByCreatorIdForYear([FromQuery] Guid creatorId)
+    public ActionResult<List<EventDto>> GetEventsForYear()
     {
-        var events = _eventService.GetEventsByCreatorId(creatorId);
+        var events = eventService.GetEvents();
         
         return events;
     }
 
-    [HttpGet]
-    public ActionResult<EventDto> GetEventById([FromQuery] Guid id)
-    {
-        var eventDto = _eventService.GetEventById(id);
-        
-        return eventDto;
-    }
-
     [HttpPost]
-    public ActionResult<Guid> CreateEvent([FromBody] CreateEventRequest request)
+    public ActionResult<Guid> CreateEvent([FromBody] EventDto request)
     {
-        RepeatDto? repeatDto = null;
-
-        if (request.RepeatRequest != null)
-        {
-            var repeatRequest = request.RepeatRequest;
-            repeatDto = new RepeatDto
-            {
-                DateStart = repeatRequest.DateStart,
-                DateEnd = repeatRequest.DateEnd,
-                Interval = repeatRequest.Interval,
-                IntervalType = repeatRequest.IntervalType
-            };
-        }
-        
-        var eventDtoForCreate = new EventDto
-        {
-            CreatorId = request.CreatorId,
-            Title = request.Title,
-            StartDateTime = request.StartDateTime,
-            EndDateTime = request.EndDateTime,
-            Repeat = repeatDto,
-            GuestIds = request.GuestIds
-        };
-
-        var idNewEvent = _eventService.CreateEvent(eventDtoForCreate);
+        var idNewEvent = eventService.CreateEvent(request);
         
         return idNewEvent;
     }
 
     [HttpPut]
-    public ActionResult<EventDto> ChangeEvent([FromBody] ChangeEventRequest request)
+    public ActionResult<EventDto> ChangeEvent([FromBody] EventDto request)
     {
-        RepeatDto? repeatDto = null;
-
-        if (request.RepeatRequest != null)
-        {
-            var repeatRequest = request.RepeatRequest;
-
-            if (repeatRequest.Id == null)
-            {
-                repeatDto = new RepeatDto
-                {
-                    DateStart = repeatRequest.DateStart,
-                    DateEnd = repeatRequest.DateEnd,
-                    Interval = repeatRequest.Interval,
-                    IntervalType = repeatRequest.IntervalType
-                };
-            }
-            else
-            {
-                repeatDto = new RepeatDto
-                {
-                    Id = repeatRequest.Id.Value,
-                    DateStart = repeatRequest.DateStart,
-                    DateEnd = repeatRequest.DateEnd,
-                    Interval = repeatRequest.Interval,
-                    IntervalType = repeatRequest.IntervalType
-                };
-            }
-            
-        }
-        
-        var eventForChange = new EventDto
-        {
-            Id = request.Id,
-            CreatorId = request.CreatorId,
-            Title = request.Title,
-            StartDateTime = request.StartDateTime,
-            EndDateTime = request.EndDateTime,
-            Repeat = repeatDto,
-            GuestIds = request.GuestIds,
-        };
-
-        var changedEvent = _eventService.ChangeEvent(eventForChange);
+        var changedEvent = eventService.ChangeEvent(request);
         
         return changedEvent;
     }
 
     [HttpDelete]
-    public ActionResult<bool> DeleteEvent([FromQuery] Guid eventId)
+    public ActionResult DeleteEvent([FromQuery] Guid eventId)
     {
-        return true;
+        return Ok();
     }
 }

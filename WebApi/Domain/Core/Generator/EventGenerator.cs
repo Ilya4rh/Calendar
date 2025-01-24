@@ -1,6 +1,5 @@
 ﻿using Core.Event.Models;
 using Core.Repeat.Models;
-using Infrastructure.Entities;
 using Infrastructure.Enums;
 
 namespace Core.Generator;
@@ -15,7 +14,7 @@ public class EventGenerator : IGenerator<EventDto>
         
         if (repeat?.Interval is null or 0)
         {
-            return [eventDto];
+            return new List<EventDto>();
         }
 
         var events = new List<EventDto>();
@@ -26,33 +25,33 @@ public class EventGenerator : IGenerator<EventDto>
         
         while (currentStartDateTime < repeatEndDateTime)
         {
-            var newDate = currentEndDateTime;
-            var newDate2 = currentEndDateTime;
+            var newStartDate = currentEndDateTime;
+            var newEndDate = currentEndDateTime;
                 
             switch (repeat.IntervalType)
             {
                 case IntervalTypes.Day:
-                    newDate = currentStartDateTime.AddDays(repeat.Interval.Value);
-                    newDate2 = currentEndDateTime.AddDays(repeat.Interval.Value);
+                    newStartDate = currentStartDateTime.AddDays(repeat.Interval.Value);
+                    newEndDate = currentEndDateTime.AddDays(repeat.Interval.Value);
                     break;
                 case IntervalTypes.Week:
-                    newDate = currentStartDateTime.AddDays(repeat.Interval.Value * DaysInWeek);
-                    newDate2 = currentEndDateTime.AddDays(repeat.Interval.Value * DaysInWeek);
+                    newStartDate = currentStartDateTime.AddDays(repeat.Interval.Value * DaysInWeek);
+                    newEndDate = currentEndDateTime.AddDays(repeat.Interval.Value * DaysInWeek);
                     break;
                 case IntervalTypes.Month:
-                    newDate = currentStartDateTime.AddMonths(repeat.Interval.Value);
-                    newDate2 = currentEndDateTime.AddMonths(repeat.Interval.Value);
+                    newStartDate = currentStartDateTime.AddMonths(repeat.Interval.Value);
+                    newEndDate = currentEndDateTime.AddMonths(repeat.Interval.Value);
                     break;
                 case IntervalTypes.Year:
-                    newDate = currentStartDateTime.AddYears(repeat.Interval.Value);
-                    newDate2 = currentEndDateTime.AddYears(repeat.Interval.Value);
+                    newStartDate = currentStartDateTime.AddYears(repeat.Interval.Value);
+                    newEndDate = currentEndDateTime.AddYears(repeat.Interval.Value);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            currentStartDateTime = newDate;
-            currentEndDateTime = newDate2;
+            currentStartDateTime = newStartDate;
+            currentEndDateTime = newEndDate;
 
             var newEvent = eventDto with
             {

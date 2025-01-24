@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace WebApplication1.Services;
+namespace WebApi.Services;
 
 public static class TokenValidationsProvider
 {

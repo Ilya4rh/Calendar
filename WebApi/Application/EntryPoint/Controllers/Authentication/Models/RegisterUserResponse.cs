@@ -1,5 +1,5 @@
 ﻿using Core.User;
 
-namespace WebApplication1.Controllers.User.Models;
+namespace WebApi.Controllers.User.Models;
 
 public record RegisterUserResponse(RegistrationResult  RegistrationResult, string? AuthToken);

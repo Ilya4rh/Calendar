@@ -1,13 +1,13 @@
-import {Button, DatePicker, Input, MaskedInput, Modal, Select, Toggle} from '@skbkontur/react-ui';
+import {Button, Input, Modal, Select, Toggle} from '@skbkontur/react-ui';
 import React, {useState} from "react";
-import {UserEvent} from "./MainPage";
 import {InputView} from "../Common/InputView";
+import {EventApi} from "../Apis/EventApi";
 
 interface AddEventModalProps {
-    onSave: (event: UserEvent) => void;
+    onSave: (event: EventApi.EventDto) => void;
     onClose: () => void;
     onDelete?: () => void;
-    currentEvent?: UserEvent;
+    currentEvent?: EventApi.EventDto;
 }
 
 export function EventModal(props: AddEventModalProps){
@@ -58,10 +58,10 @@ export function EventModal(props: AddEventModalProps){
         return [];
     }
 
-    const [date, setDate] = useState<string>( currentEvent ? `${addTrailingZeroIfNeed(currentEvent.dateTo.getDate())}.${addTrailingZeroIfNeed(currentEvent.dateTo.getMonth() + 1)}.${currentEvent.dateTo.getFullYear()}` : "");
-    const [startTime, setStartTime] = useState<string>(currentEvent ? `${addTrailingZeroIfNeed(currentEvent.dateFrom.getHours())}:${addTrailingZeroIfNeed(currentEvent.dateFrom.getMinutes())}` : "");
-    const [endTime, setEndTime] = useState<string>(currentEvent ? `${addTrailingZeroIfNeed(currentEvent.dateTo.getHours())}:${addTrailingZeroIfNeed(currentEvent.dateTo.getMinutes())}` : "");
-    const [name, setName] = useState<string>(currentEvent?.caption ?? "");
+    const [date, setDate] = useState<string>( currentEvent ? `${addTrailingZeroIfNeed(currentEvent.endDateTime.getDate())}.${addTrailingZeroIfNeed(currentEvent.endDateTime.getMonth() + 1)}.${currentEvent.endDateTime.getFullYear()}` : "");
+    const [startTime, setStartTime] = useState<string>(currentEvent ? `${addTrailingZeroIfNeed(currentEvent.startDateTime.getHours())}:${addTrailingZeroIfNeed(currentEvent.startDateTime.getMinutes())}` : "");
+    const [endTime, setEndTime] = useState<string>(currentEvent ? `${addTrailingZeroIfNeed(currentEvent.endDateTime.getHours())}:${addTrailingZeroIfNeed(currentEvent.endDateTime.getMinutes())}` : "");
+    const [name, setName] = useState<string>(currentEvent?.title ?? "");
     const [showRepeatInterval, setShowRepeatInterval] = useState(false);
     const [repeatPeriod, setRepeatPeriod] = useState<string>("Дней");
     const periodRepeatItems = ['Дней', 'Недель', 'Месяцев'];
@@ -112,10 +112,11 @@ export function EventModal(props: AddEventModalProps){
                     const splitStartTime = startTime.split(":");
                     const splitEndTime = endTime.split(":");
                     props.onSave({
-                        caption: name,
-                        dateFrom: new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]), Number(splitStartTime[0]), Number(splitStartTime[1])),
-                        dateTo: new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]), Number(splitEndTime[0]), Number(splitEndTime[1])),
-                        id: props.currentEvent?.id ?? crypto.randomUUID().toString()
+                        title: name,
+                        startDateTime: new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]), Number(splitStartTime[0]), Number(splitStartTime[1])),
+                        endDateTime: new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]), Number(splitEndTime[0]), Number(splitEndTime[1])),
+                        id: props.currentEvent?.id ?? crypto.randomUUID().toString(),
+                        repeat: props.currentEvent?.repeat ?? null
                     });
                     reset();
                 }}>{currentEvent ? "Сохранить" : "Создать"}</Button>

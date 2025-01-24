@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Entities;
 
-public class RepeatEntity : Entity
+public class RepeatEntity : UserScopeEntity
 {
     public DateTime DateStart { get; init; }
 

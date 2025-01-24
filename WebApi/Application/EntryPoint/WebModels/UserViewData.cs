@@ -1,4 +1,4 @@
-﻿namespace WebApplication1.WebModels;
+﻿namespace WebApi.WebModels;
 
 public class UserViewData
 {

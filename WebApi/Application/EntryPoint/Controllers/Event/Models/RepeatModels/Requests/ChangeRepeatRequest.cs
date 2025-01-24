@@ -1,6 +1,6 @@
 using Infrastructure.Enums;
 
-namespace WebApplication1.Controllers.Event.Models.RepeatModels.Requests;
+namespace WebApi.Controllers.Event.Models.RepeatModels.Requests;
 
 public record ChangeRepeatRequest
 {

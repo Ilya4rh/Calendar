@@ -4,7 +4,7 @@ namespace Core.Repeat.Models;
 
 public record RepeatDto
 {
-    public Guid Id { get; init; }
+    public Guid? Id { get; init; }
     
     public required DateTime DateStart { get; init; }
 

@@ -1,16 +1,16 @@
 import React, {useState} from "react";
 import styles from './mainpage.module.css';
-import {UserEvent} from "./MainPage";
 import {EventModal} from "./EventModal";
+import {EventApi} from "../Apis/EventApi";
 
 interface EventCardProps{
-    event: UserEvent
+    event: EventApi.EventDto
     onDelete: () => void;
-    onChange: (event: UserEvent) => void;
+    onChange: (event: EventApi.EventDto) => void;
 }
 
 export function EventCard(props: EventCardProps){
-    const millisecondsDiff = props.event.dateTo.getTime() - props.event.dateFrom.getTime();
+    const millisecondsDiff = props.event.endDateTime.getTime() - props.event.startDateTime.getTime();
     const diffMins = millisecondsDiff / 60000;
     const x = diffMins / 60;
     const randomColor = "#"+((1<<24)*Math.random()|0).toString(16);
@@ -34,7 +34,7 @@ export function EventCard(props: EventCardProps){
                     onClick={() => setShowEditModal(true)}
                     style={{backgroundColor: backgroundColor, height: `${100 * x}px`}}
                     className={styles.EventCard}>
-                {props.event.caption}
+                {props.event.title}
             </button>
         </>
     );

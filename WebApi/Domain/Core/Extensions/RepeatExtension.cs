@@ -21,7 +21,7 @@ public static class RepeatExtension
     {
         return new RepeatEntity
         {
-            Id = repeatDto.Id,
+            Id = repeatDto.Id ?? Guid.NewGuid(),
             DateStart = repeatDto.DateStart,
             DateEnd = repeatDto.DateEnd,
             Interval = repeatDto.Interval,

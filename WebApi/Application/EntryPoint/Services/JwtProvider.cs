@@ -1,9 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Infrastructure.Repositories;
+using Infrastructure.Repositories.ApplicationScope;
 using Microsoft.IdentityModel.Tokens;
 
-namespace WebApplication1.Services;
+namespace WebApi.Services;
 
 public class JwtProvider
 {

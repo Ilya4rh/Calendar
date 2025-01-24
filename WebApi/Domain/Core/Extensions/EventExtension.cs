@@ -12,11 +12,9 @@ public static class EventExtension
         {
             Id = eventEntity.Id,
             Title = eventEntity.Title,
-            CreatorId = eventEntity.CreatorId,
             StartDateTime = eventEntity.StartDateTime,
             EndDateTime = eventEntity.EndDateTime,
-            Repeat = repeatDto,
-            GuestIds = eventEntity.GuestIds,
+            Repeat = repeatDto
         };
     }
 
@@ -24,13 +22,11 @@ public static class EventExtension
     {
         return new EventEntity
         {
-            Id = eventDto.Id,
+            Id = eventDto.Id ?? Guid.NewGuid(),
             Title = eventDto.Title,
-            CreatorId = eventDto.CreatorId,
             StartDateTime = eventDto.StartDateTime,
             EndDateTime = eventDto.EndDateTime,
-            RepeatId = repeatId,
-            GuestIds = eventDto.GuestIds,
+            RepeatId = repeatId
         };
     }
 }

@@ -2,6 +2,7 @@ import {useContext, createContext, ReactNode, useState, useEffect} from "react";
 import {AuthenticationApi} from "./Apis/AuthenticationApi";
 import {Navigate} from "react-router-dom";
 import {Spinner} from "@skbkontur/react-ui";
+import {Center} from "@skbkontur/react-ui";
 
 interface IAuthContext{
     authenticated: boolean
@@ -28,7 +29,7 @@ function AuthProvider(props: AuthProviderProps) {
     }, [])
 
     if (authenticated === undefined)
-        return <Spinner type={"big"}></Spinner>;
+        return <Center><Spinner type={"big"}></Spinner></Center>;
 
     if (authenticated == false)
         return <Navigate to={"/"}/>;

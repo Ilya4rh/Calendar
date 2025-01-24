@@ -1,10 +1,8 @@
 ﻿namespace Infrastructure.Entities;
 
-public class EventEntity : Entity
+public class EventEntity : UserScopeEntity
 {
-    public Guid CreatorId { get; init; }
-    
-    public string? Title { get; init; }
+    public string Title { get; init; }
     
     public DateTime StartDateTime { get; init; }
     

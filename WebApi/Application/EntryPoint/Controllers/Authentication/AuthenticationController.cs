@@ -1,10 +1,11 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Core.User;
+using EntryPoint.Controllers.Authentication.Models;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Controllers.User.Models;
-using WebApplication1.Services;
+using WebApi.Controllers.User.Models;
+using WebApi.Services;
 
-namespace WebApplication1.Controllers.User;
+namespace WebApi.Controllers.User;
 
 [Route("[controller]/[action]")]
 [ApiController]

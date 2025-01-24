@@ -1,5 +1,6 @@
 using Infrastructure.Entities;
 using Infrastructure.Repositories;
+using Infrastructure.Repositories.UserScope;
 
 namespace Core.Repeat;
 

@@ -1,5 +1,5 @@
 ﻿using Core.User;
 
-namespace WebApplication1.Controllers.User.Models;
+namespace EntryPoint.Controllers.Authentication.Models;
 
 public record AuthenticationUserResponse(AuthenticationResult AuthenticationResult, string? AuthToken);
