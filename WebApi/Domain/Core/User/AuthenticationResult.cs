@@ -1,6 +1,6 @@
 ﻿namespace Core.User;
 
-public enum AuthorizationResult
+public enum AuthenticationResult
 {
     UserNotFound,
     WrongPassword,

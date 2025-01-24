@@ -33,7 +33,7 @@ public class EventController
             EndDateTime = default,
             Repeat = 0,
             Description = null,
-            GuestIds = []
+            GuestIds = Array.Empty<Guid>()
         };
     }
 
@@ -54,7 +54,7 @@ public class EventController
             EndDateTime = default,
             Repeat = 0,
             Description = null,
-            GuestIds = []
+            GuestIds = Array.Empty<Guid>()
         };
     }
 

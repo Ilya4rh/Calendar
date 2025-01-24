@@ -9,24 +9,19 @@ export function Promo() {
                 <PromoHeader/>
                 <div className={styles.PromoBody}>
                     <div className={styles.UpperText}>
-                        готовы найти проект или коллег<br />за пару кликов?<br />
+                        Электронный календарь<br />
                     </div>
                     <div className={styles.BottomText}>
                         <div className={styles.FirstBottom}>
-                            ищите единомышленников
+                            планируйте дела
                         </div>
                         <div className={styles.SecondBottom}>
-                            присоединяйтесь к команде
+                            создавайте события
                         </div>
                         <div className={styles.ThirdBottom}>
-                            создавайте собственный проект
+                            управляйте своим временем
                         </div>
                     </div>
-                    <button className={styles.ButtonBg}>
-                        <div className={styles.MainButtonText}>
-                            найти команду
-                        </div>
-                    </button>
                 </div>
             </div>
         </div>

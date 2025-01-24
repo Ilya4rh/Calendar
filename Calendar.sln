@@ -7,6 +7,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{86C3CB85-7C45-4D5B-9472-BCCB6385C610}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{72700B58-1FC5-4779-8EC9-6F68E9EF2020}"
+	ProjectSection(SolutionItems) = preProject
+		WebApi\docker-compose.yml = WebApi\docker-compose.yml
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntryPoint", "WebApi\Application\EntryPoint\EntryPoint.csproj", "{6C0435AE-EA3B-4692-BB62-40E5C9BE17A0}"
 EndProject

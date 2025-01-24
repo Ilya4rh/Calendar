@@ -1,5 +1,5 @@
 import {useContext, createContext, ReactNode, useState, useEffect} from "react";
-import {UsersApi} from "./Apis/UsersApi";
+import {AuthenticationApi} from "./Apis/AuthenticationApi";
 import {Navigate} from "react-router-dom";
 import {Spinner} from "@skbkontur/react-ui";
 
@@ -22,7 +22,7 @@ function AuthProvider(props: AuthProviderProps) {
     }
 
     useEffect(() => {
-        UsersApi.isAuthorized()
+        AuthenticationApi.isAuthenticated()
             .then((x) => onAuth(x.data))
             .catch((err) => console.log(err));
     }, [])

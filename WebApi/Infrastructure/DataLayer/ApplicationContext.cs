@@ -11,15 +11,16 @@ public class ApplicationContext : DbContext
  
     public ApplicationContext()
     {
+        Database.EnsureDeleted();
         Database.EnsureCreated();
     }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var connectionString = new ConnectionString
         {
-            DatabaseName = "team",
+            DatabaseName = "calendar",
             Host = "localhost",
-            Port = "5432",
+            Port = "5431",
             Password = "postgres",
             UserName = "postgres"
         };

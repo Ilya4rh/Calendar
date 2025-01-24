@@ -1,0 +1,110 @@
+.ScheduleContainer {
+    justify-items: center;
+}
+
+.MainPageContainer {
+    display: grid;
+    align-self: center;
+    align-items: center;
+    margin: 100px;
+    height: 80vh;
+    grid-template-columns: 20% 70%;
+}
+
+.CalendarContainer{
+    display: grid;
+    justify-items: center;
+    gap: 50px;
+}
+
+.Schedule {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 93%;
+    margin-left: 50px;
+}
+
+.Schedule td, .Schedule th {
+    border: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.MainPageHeader {
+    display: flex;
+    justify-content: space-around;
+    margin: 0 40px 40px;
+    align-items: center;
+}
+
+.Schedule td, .Schedule th {
+    border: 1px solid #ddd;
+    border-top: none;
+    min-width: 200px;
+    justify-items: center;
+    height: 100px;
+    max-height: 100px;
+}
+
+.Schedule tr {
+    overflow: hidden;
+    height: 100px;
+    white-space: nowrap;
+}
+
+.Schedule tr td:first-child, .Schedule tr th:first-child {
+    border-left: none;
+    width: 20px;
+    min-width: 20px;
+}
+.Schedule tr td:last-child, .Schedule tr th:last-child {
+    border-right: none;
+}
+
+.Schedule tr:last-child td {
+    border-bottom: none;
+}
+
+.Hour {
+    margin-left: -50px;
+}
+
+.CurrentWeekDay {
+    background-color: lightgray;
+}
+
+.EventCard{
+    align-items: center;
+    border: 1px solid #dfdede;
+    border-radius: 10%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.EventCard:hover {
+    background-color: lightgray;
+}
+
+.EventCard:active {
+    background-color: gray;
+}
+
+.ScheduleCell {
+    height: 40px;
+}
+
+.ScheduleHourCell {
+    height: 40px;
+    width: 10px;
+    text-align: center;
+}
+
+.Schedule th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    color: black;
+}

@@ -27,15 +27,15 @@ public class UserService
         return RegistrationResult.Success;
     }
     
-    public AuthorizationResult Authorize(string email, string password)
+    public AuthenticationResult Authorize(string email, string password)
     {
         var user = userRepository.GetByEmailOrDefault(email);
 
         if (user is null)
-            return AuthorizationResult.UserNotFound;
+            return AuthenticationResult.UserNotFound;
 
         return user.Password != password
-            ? AuthorizationResult.WrongPassword
-            : AuthorizationResult.Success;
+            ? AuthenticationResult.WrongPassword
+            : AuthenticationResult.Success;
     }
 }

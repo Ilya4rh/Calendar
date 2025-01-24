@@ -1,7 +1,7 @@
 import {Button, Modal} from "@skbkontur/react-ui";
 import styles from "./promo.module.css";
 import React, {useState} from "react";
-import {UsersApi} from "../Apis/UsersApi";
+import {AuthenticationApi} from "../Apis/AuthenticationApi";
 import {InputView} from "../Common/InputView";
 import * as EmailValidator from 'email-validator';
 import {useNavigate} from "react-router-dom";
@@ -34,20 +34,20 @@ export function PromoLightbox(props: LoginLightboxProps) {
             newPasswordValidations.push("Введен неверный пароль")
 
         if (newEmailValidations.length === 0 && newPasswordValidations.length === 0){
-            const request: UsersApi.AuthorizeUserRequest = {
+            const request: AuthenticationApi.AuthenticateUserRequest = {
                 email: email,
                 password: password
             }
-            const response = (await UsersApi.authorize(request)).data;
+            const response = (await AuthenticationApi.authenticate(request)).data;
 
-            if (response.authorizationResult == UsersApi.AuthorizationResult.Success){
+            if (response.authorizationResult == AuthenticationApi.AuthenticationResult.Success){
                 cookies.set("Auth", response.authToken);
                 navigate("/MainPage");
             }
 
-            if (response.authorizationResult === UsersApi.AuthorizationResult.UserNotFound)
+            if (response.authorizationResult === AuthenticationApi.AuthenticationResult.UserNotFound)
                 newEmailValidations.push("Пользователь с такой электронной почтой не найден");
-            if (response.authorizationResult === UsersApi.AuthorizationResult.WrongPassword)
+            if (response.authorizationResult === AuthenticationApi.AuthenticationResult.WrongPassword)
                 newPasswordValidations.push("Введен неверный пароль");
         }
         setEmailValidations(newEmailValidations);
@@ -65,18 +65,18 @@ export function PromoLightbox(props: LoginLightboxProps) {
             newPasswordValidations.push("Пароль должен содержать больше 8 символов");
 
         if (newEmailValidations.length === 0 && newPasswordValidations.length === 0){
-            const request: UsersApi.AuthorizeUserRequest = {
+            const request: AuthenticationApi.AuthenticateUserRequest = {
                 email: email,
                 password: password
             }
-            const response = (await UsersApi.register(request)).data;
+            const response = (await AuthenticationApi.register(request)).data;
 
-            if (response.registrationResult == UsersApi.RegistrationResult.Success){
+            if (response.registrationResult == AuthenticationApi.RegistrationResult.Success){
                 cookies.set("Auth", response.authToken);
                 navigate("/MainPage");
             }
 
-            if (response.registrationResult === UsersApi.RegistrationResult.AlreadyExist)
+            if (response.registrationResult === AuthenticationApi.RegistrationResult.AlreadyExist)
                 newEmailValidations.push("Пользователь с такой электронной почтой уже существует");
         }
 
