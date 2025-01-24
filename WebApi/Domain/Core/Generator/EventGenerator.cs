@@ -10,14 +10,14 @@ public class EventGenerator : IGenerator<EventDto>
     
     public List<EventDto> Generate(EventDto eventDto)
     {
+        var events = new List<EventDto>();
         var repeat = eventDto.Repeat;
         
         if (repeat?.Interval is null or 0)
         {
-            return new List<EventDto>();
+            return events;
         }
 
-        var events = new List<EventDto>();
         var repeatEndDateTime = GetEndRepeatDateTime(repeat);
 
         var currentStartDateTime = eventDto.StartDateTime;
@@ -25,33 +25,8 @@ public class EventGenerator : IGenerator<EventDto>
         
         while (currentStartDateTime < repeatEndDateTime)
         {
-            var newStartDate = currentEndDateTime;
-            var newEndDate = currentEndDateTime;
-                
-            switch (repeat.IntervalType)
-            {
-                case IntervalTypes.Day:
-                    newStartDate = currentStartDateTime.AddDays(repeat.Interval.Value);
-                    newEndDate = currentEndDateTime.AddDays(repeat.Interval.Value);
-                    break;
-                case IntervalTypes.Week:
-                    newStartDate = currentStartDateTime.AddDays(repeat.Interval.Value * DaysInWeek);
-                    newEndDate = currentEndDateTime.AddDays(repeat.Interval.Value * DaysInWeek);
-                    break;
-                case IntervalTypes.Month:
-                    newStartDate = currentStartDateTime.AddMonths(repeat.Interval.Value);
-                    newEndDate = currentEndDateTime.AddMonths(repeat.Interval.Value);
-                    break;
-                case IntervalTypes.Year:
-                    newStartDate = currentStartDateTime.AddYears(repeat.Interval.Value);
-                    newEndDate = currentEndDateTime.AddYears(repeat.Interval.Value);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            currentStartDateTime = newStartDate;
-            currentEndDateTime = newEndDate;
+            currentStartDateTime = GetNextDate(currentStartDateTime, repeat.Interval.Value, repeat.IntervalType);
+            currentEndDateTime = GetNextDate(currentEndDateTime, repeat.Interval.Value, repeat.IntervalType);
 
             var newEvent = eventDto with
             {
@@ -64,6 +39,18 @@ public class EventGenerator : IGenerator<EventDto>
         }
         
         return events;
+    }
+
+    private static DateTime GetNextDate(DateTime currentDate, int interval, IntervalTypes intervalType)
+    {
+        return intervalType switch
+        {
+            IntervalTypes.Day => currentDate.AddDays(interval),
+            IntervalTypes.Week => currentDate.AddDays(interval * DaysInWeek),
+            IntervalTypes.Month => currentDate.AddMonths(interval),
+            IntervalTypes.Year => currentDate.AddYears(interval),
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
     
     private static DateTime GetEndRepeatDateTime(RepeatDto repeatDto)
