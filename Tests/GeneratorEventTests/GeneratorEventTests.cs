@@ -79,20 +79,20 @@ public class GeneratorEventTests
             },
             new Expected
             {
-                EventStartTimes =
-                [
+                EventStartTimes = new List<DateTime>
+                {
                     DateTime.Parse("2025-01-27 10:00:00"),
                     DateTime.Parse("2025-01-29 10:00:00"),
                     DateTime.Parse("2025-01-31 10:00:00"),
-                    DateTime.Parse("2025-02-02 10:00:00"),
-                ],
-                EventEndTimes = 
-                [
+                    DateTime.Parse("2025-02-02 10:00:00")
+                },
+                EventEndTimes = new List<DateTime>
+                {
                     DateTime.Parse("2025-01-27 11:00:00"),
                     DateTime.Parse("2025-01-29 11:00:00"),
                     DateTime.Parse("2025-01-31 11:00:00"),
-                    DateTime.Parse("2025-02-02 11:00:00"),
-                ]
+                    DateTime.Parse("2025-02-02 11:00:00")
+                }
             }
         )
         .SetName("01. Мероприятие должно повторятся каждые два дня"),
@@ -108,16 +108,16 @@ public class GeneratorEventTests
             },
             new Expected
             {
-                EventStartTimes =
-                [
+                EventStartTimes = new List<DateTime>
+                {
                     DateTime.Parse("2025-02-08 10:00:00"),
                     DateTime.Parse("2025-02-22 10:00:00"),
-                ],
-                EventEndTimes = 
-                [
+                },
+                EventEndTimes = new List<DateTime>
+                {
                     DateTime.Parse("2025-02-08 11:00:00"),
                     DateTime.Parse("2025-02-22 11:00:00"),
-                ]
+                }
             }
         )
         .SetName("02. Мероприятие должно повторятся каждые две недели"),
@@ -133,18 +133,18 @@ public class GeneratorEventTests
             },
             new Expected
             {
-                EventStartTimes =
-                [
+                EventStartTimes = new List<DateTime>
+                {
                     DateTime.Parse("2025-02-25 10:00:00"),
                     DateTime.Parse("2025-03-25 10:00:00"),
                     DateTime.Parse("2025-04-25 10:00:00"),
-                ],
-                EventEndTimes = 
-                [
+                },
+                EventEndTimes = new List<DateTime>
+                {
                     DateTime.Parse("2025-02-25 11:00:00"),
                     DateTime.Parse("2025-03-25 11:00:00"),
                     DateTime.Parse("2025-04-25 11:00:00"),
-                ],
+                }
             }
         )
         .SetName("03. Мероприятие должно повторятся каждый месяц"),
@@ -160,14 +160,14 @@ public class GeneratorEventTests
             },
             new Expected
             {
-                EventStartTimes =
-                [
-                    DateTime.Parse("2026-01-25 10:00:00"),
-                ],
-                EventEndTimes =
-                [
-                    DateTime.Parse("2026-01-25 11:00:00"),
-                ]
+                EventStartTimes = new List<DateTime>
+                {
+                    DateTime.Parse("2026-01-25 10:00:00")
+                },
+                EventEndTimes = new List<DateTime>
+                {
+                    DateTime.Parse("2026-01-25 11:00:00")
+                }
             }
         )
         .SetName("04. Мероприятие должно повторятся каждый год"),
