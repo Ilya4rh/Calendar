@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "WebApi\Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "WebApi\Domain\Core\Core.csproj", "{D66BB890-6E1B-432D-9224-F8426C15BD15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F3304B1D-42C5-44A4-A966-3D118ACB1019}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{D66BB890-6E1B-432D-9224-F8426C15BD15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D66BB890-6E1B-432D-9224-F8426C15BD15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D66BB890-6E1B-432D-9224-F8426C15BD15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3304B1D-42C5-44A4-A966-3D118ACB1019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3304B1D-42C5-44A4-A966-3D118ACB1019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3304B1D-42C5-44A4-A966-3D118ACB1019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3304B1D-42C5-44A4-A966-3D118ACB1019}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{54033464-3C63-488A-84CF-C239EF53EB63} = {72700B58-1FC5-4779-8EC9-6F68E9EF2020}

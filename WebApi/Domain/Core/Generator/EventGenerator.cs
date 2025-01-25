@@ -19,15 +19,13 @@ public class EventGenerator : IGenerator<EventDto>
         }
 
         var repeatEndDateTime = GetEndRepeatDateTime(repeat);
-
-        var currentStartDateTime = eventDto.StartDateTime;
-        var currentEndDateTime = eventDto.EndDateTime;
+        var repeatInterval = repeat.Interval.Value;
+        var repeatIntervalType = repeat.IntervalType;
+        var currentStartDateTime = GetNextDate(eventDto.StartDateTime, repeatInterval, repeatIntervalType);
+        var currentEndDateTime = GetNextDate(eventDto.EndDateTime, repeatInterval, repeatIntervalType);
         
-        while (currentStartDateTime < repeatEndDateTime)
+        while (currentStartDateTime.Date <= repeatEndDateTime.Date)
         {
-            currentStartDateTime = GetNextDate(currentStartDateTime, repeat.Interval.Value, repeat.IntervalType);
-            currentEndDateTime = GetNextDate(currentEndDateTime, repeat.Interval.Value, repeat.IntervalType);
-
             var newEvent = eventDto with
             {
                 StartDateTime = currentStartDateTime, 
@@ -36,6 +34,9 @@ public class EventGenerator : IGenerator<EventDto>
             };
             
             events.Add(newEvent);
+            
+            currentStartDateTime = GetNextDate(currentStartDateTime, repeatInterval, repeatIntervalType);
+            currentEndDateTime = GetNextDate(currentEndDateTime, repeatInterval, repeatIntervalType);
         }
         
         return events;
