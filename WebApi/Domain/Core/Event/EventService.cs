@@ -1,11 +1,12 @@
-﻿using Core.Event.Models;
+﻿using Core.Event.Interfaces;
+using Core.Event.Models;
 using Core.Extensions;
 using Core.Generator;
 using Infrastructure.Repositories.UserScope;
 
 namespace Core.Event;
 
-public class EventService
+public class EventService : IEventService
 {
     private readonly EventRepository eventRepository;
 
@@ -20,20 +21,17 @@ public class EventService
         this.generator = generator;
     }
 
-    public List<EventDto> GetEvents()
+    public List<EventDto> GetEventsForYear()
     {
-        var events = eventRepository.Select().AsEnumerable();
+        var events = eventRepository.GetEventsForYear();
         var eventsDto = new List<EventDto>();
         
         foreach (var eventEntity in events)
         {
             var repeat = eventEntity.RepeatId == null ? null : repeatRepository.GetById(eventEntity.RepeatId.Value);
+            var eventDto = eventEntity.ToDto(repeat?.ToDto());
             
-            eventsDto.Add(eventEntity.ToDto(repeat?.ToDto()));
-        }
-
-        foreach (var eventDto in eventsDto.ToList())
-        {
+            eventsDto.Add(eventDto);
             eventsDto.AddRange(generator.Generate(eventDto));
         }
 
@@ -76,5 +74,18 @@ public class EventService
         var changedEvent = eventRepository.Update(eventDto.ToEntity(repeatDto?.Id));
 
         return changedEvent.ToDto(repeatDto);
+    }
+
+    public void DeleteEvent(Guid eventId)
+    {
+        var eventEntity = eventRepository.GetById(eventId);
+        
+        if (eventEntity.RepeatId.HasValue)
+        {
+            var repeatEntity = repeatRepository.GetById(eventEntity.RepeatId.Value);
+            repeatRepository.Delete(repeatEntity);
+        }
+        
+        eventRepository.Delete(eventEntity);
     }
 }

@@ -9,4 +9,6 @@ public interface IUserScope
     public TEntity Update<TEntity>(TEntity entity) where TEntity : UserScopeEntity;
 
     public IQueryable<TEntity> Select<TEntity>() where TEntity : UserScopeEntity;
+
+    public void Delete<TEntity>(TEntity entity) where TEntity : UserScopeEntity;
 }

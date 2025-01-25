@@ -12,4 +12,11 @@ public class EventRepository : UserScopeRepository<EventEntity>
     {
         return Select().Single(eventEntity => eventEntity.Id == id);
     }
+    
+    public IEnumerable<EventEntity> GetEventsForYear()
+    {
+        var currentYear = DateTime.UtcNow.Year;
+        
+        return Select().Where(eventEntity => eventEntity.StartDateTime.Year == currentYear).AsEnumerable();
+    }
 }

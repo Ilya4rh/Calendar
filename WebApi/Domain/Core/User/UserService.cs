@@ -1,10 +1,10 @@
+using Core.User.Interfaces;
 using Infrastructure.Entities;
-using Infrastructure.Repositories;
 using Infrastructure.Repositories.ApplicationScope;
 
 namespace Core.User;
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly UserRepository userRepository;
 

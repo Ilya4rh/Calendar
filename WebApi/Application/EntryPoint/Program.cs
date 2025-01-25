@@ -1,14 +1,15 @@
 using Core.Event;
+using Core.Event.Interfaces;
 using Core.Event.Models;
 using Core.Generator;
-using Core.Repeat;
 using Core.User;
+using Core.User.Interfaces;
 using EntryPoint;
+using EntryPoint.Services;
 using Infrastructure;
 using Infrastructure.Repositories.ApplicationScope;
 using Infrastructure.Repositories.UserScope;
 using Microsoft.AspNetCore.Authentication;
-using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,9 +26,8 @@ builder.Services.AddTransient<JwtProvider>();
 builder.Services.AddTransient<AuthenticationService>();
 builder.Services.AddAuth();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddTransient<UserService>();
-builder.Services.AddTransient<EventService>();
-builder.Services.AddTransient<RepeatService>();
+builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IEventService, EventService>();
 builder.Services.AddTransient<IGenerator<EventDto>, EventGenerator>();
 builder.Services.AddCors();
 

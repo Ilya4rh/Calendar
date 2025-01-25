@@ -20,9 +20,14 @@ public abstract class UserScopeRepository<TEntity> where TEntity: UserScopeEntit
     {
         return userScope.Update(entity);
     }
-    
-    public IQueryable<TEntity> Select()
+
+    protected IQueryable<TEntity> Select()
     {
         return userScope.Select<TEntity>();
+    }
+
+    public void Delete(TEntity entity)
+    {
+        userScope.Delete(entity);
     }
 }

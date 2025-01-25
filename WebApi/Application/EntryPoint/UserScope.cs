@@ -47,6 +47,11 @@ public class UserScope: IUserScope
         return applicationScope.Select<TEntity>().Where(x => x.UserId == userId);
     }
 
+    public void Delete<TEntity>(TEntity entity) where TEntity : UserScopeEntity
+    {
+        applicationScope.Delete(entity);
+    }
+
     private Guid GetUserId()
     {
         if (userId is null)

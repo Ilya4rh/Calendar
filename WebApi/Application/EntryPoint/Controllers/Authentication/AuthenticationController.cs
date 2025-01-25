@@ -1,21 +1,21 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Core.User;
+using Core.User.Interfaces;
 using EntryPoint.Controllers.Authentication.Models;
+using EntryPoint.Services;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Controllers.User.Models;
-using WebApi.Services;
 
-namespace WebApi.Controllers.User;
+namespace EntryPoint.Controllers.Authentication;
 
 [Route("[controller]/[action]")]
 [ApiController]
 public class AuthenticationController: ControllerBase
 {
-    private readonly UserService userService;
+    private readonly IUserService userService;
     private readonly JwtProvider jwtProvider;
     private readonly IHttpContextAccessor context;
 
-    public AuthenticationController(UserService userService, JwtProvider jwtProvider, IHttpContextAccessor context)
+    public AuthenticationController(IUserService userService, JwtProvider jwtProvider, IHttpContextAccessor context)
     {
         this.userService = userService;
         this.jwtProvider = jwtProvider;

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
@@ -45,5 +46,11 @@ public class ApplicationScope : IApplicationScope
     public IQueryable<TEntity> Select<TEntity>() where TEntity: Entity
     {
         return applicationContext.Set<TEntity>().AsNoTracking();
+    }
+
+    public void Delete<TEntity>(TEntity entity) where TEntity : Entity
+    {
+        applicationContext.Remove(entity);
+        applicationContext.SaveChanges();
     }
 }

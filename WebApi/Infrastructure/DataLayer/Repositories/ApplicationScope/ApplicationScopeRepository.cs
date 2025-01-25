@@ -1,4 +1,6 @@
-﻿namespace Infrastructure.Repositories.ApplicationScope;
+﻿using Infrastructure.Entities;
+
+namespace Infrastructure.Repositories.ApplicationScope;
 
 public abstract class ApplicationScopeRepository<TEntity> where TEntity: Entity
 {

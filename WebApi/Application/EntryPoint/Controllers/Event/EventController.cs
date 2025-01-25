@@ -1,4 +1,5 @@
 ﻿using Core.Event;
+using Core.Event.Interfaces;
 using Core.Event.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,9 +9,9 @@ namespace EntryPoint.Controllers.Event;
 [ApiController]
 public class EventController: ControllerBase
 {
-    private readonly EventService eventService;
-
-    public EventController(EventService eventService)
+    private readonly IEventService eventService;
+    
+    public EventController(IEventService eventService)
     {
         this.eventService = eventService;
     }
@@ -18,7 +19,7 @@ public class EventController: ControllerBase
     [HttpGet]
     public ActionResult<List<EventDto>> GetEventsForYear()
     {
-        var events = eventService.GetEvents();
+        var events = eventService.GetEventsForYear();
         
         return events;
     }
@@ -42,6 +43,8 @@ public class EventController: ControllerBase
     [HttpDelete]
     public ActionResult DeleteEvent([FromQuery] Guid eventId)
     {
+        eventService.DeleteEvent(eventId);
+        
         return Ok();
     }
 }

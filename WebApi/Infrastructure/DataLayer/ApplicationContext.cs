@@ -1,4 +1,5 @@
-﻿using Infrastructure.Entities;
+﻿using Infrastructure.Connection;
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure;
@@ -21,7 +22,7 @@ public class ApplicationContext : DbContext
         {
             DatabaseName = "calendar",
             Host = "localhost",
-            Port = "5431",
+            Port = "5435",
             Password = "postgres",
             UserName = "postgres"
         };

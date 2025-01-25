@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
-namespace WebApi.Services;
+namespace EntryPoint.Services;
 
 public static class AuthExtension
 {

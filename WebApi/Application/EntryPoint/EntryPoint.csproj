@@ -18,8 +18,4 @@
       <ProjectReference Include="..\..\Infrastructure\DataLayer\DataLayer.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Controllers\Repeat\Models\Requests\" />
-    </ItemGroup>
-
 </Project>
