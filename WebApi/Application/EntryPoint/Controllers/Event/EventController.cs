@@ -1,5 +1,4 @@
-﻿using Core.Event;
-using Core.Event.Interfaces;
+﻿using Core.Event.Interfaces;
 using Core.Event.Models;
 using Microsoft.AspNetCore.Mvc;
 

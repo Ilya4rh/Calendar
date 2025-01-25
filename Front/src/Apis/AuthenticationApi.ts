@@ -9,7 +9,7 @@ export namespace AuthenticationApi {
 
     interface AuthenticationUserResponse{
         authToken?: string,
-        authorizationResult: AuthenticationResult
+        authenticationResult: AuthenticationResult
     }
 
     interface RegisterUserResponse{
@@ -38,5 +38,9 @@ export namespace AuthenticationApi {
 
     export function isAuthenticated(): Promise<AxiosResponse<boolean, any>> {
         return axios.get("http://localhost:5031/Authentication/IsAuthenticated", { withCredentials: true });
+    }
+
+    export function logOut(): Promise<AxiosResponse> {
+        return axios.get("http://localhost:5031/Authentication/LogOut", { withCredentials: true });
     }
 }

@@ -4,9 +4,9 @@ import {InputView} from "../Common/InputView";
 import {EventApi} from "../Apis/EventApi";
 
 interface AddEventModalProps {
-    onSave: (event: EventApi.EventDto) => void;
+    onSave: (event: EventApi.EventDto) => Promise<void>;
     onClose: () => void;
-    onDelete?: () => void;
+    onDelete?: (id: string) => Promise<void>;
     currentEvent?: EventApi.EventDto;
 }
 
@@ -58,20 +58,14 @@ export function EventModal(props: AddEventModalProps){
         return [];
     }
 
+    const periodRepeatItems = ['Дней', 'Недель', 'Месяцев', 'Лет'];
     const [date, setDate] = useState<string>( currentEvent ? `${addTrailingZeroIfNeed(currentEvent.endDateTime.getDate())}.${addTrailingZeroIfNeed(currentEvent.endDateTime.getMonth() + 1)}.${currentEvent.endDateTime.getFullYear()}` : "");
     const [startTime, setStartTime] = useState<string>(currentEvent ? `${addTrailingZeroIfNeed(currentEvent.startDateTime.getHours())}:${addTrailingZeroIfNeed(currentEvent.startDateTime.getMinutes())}` : "");
     const [endTime, setEndTime] = useState<string>(currentEvent ? `${addTrailingZeroIfNeed(currentEvent.endDateTime.getHours())}:${addTrailingZeroIfNeed(currentEvent.endDateTime.getMinutes())}` : "");
     const [name, setName] = useState<string>(currentEvent?.title ?? "");
-    const [showRepeatInterval, setShowRepeatInterval] = useState(false);
-    const [repeatPeriod, setRepeatPeriod] = useState<string>("Дней");
-    const periodRepeatItems = ['Дней', 'Недель', 'Месяцев'];
-
-    function reset() {
-        setDate("");
-        setName("");
-        setStartTime("");
-        setEndTime("");
-    }
+    const [showRepeatInterval, setShowRepeatInterval] = useState<boolean>(currentEvent?.repeat ? true : false);
+    const [repeatPeriod, setRepeatPeriod] = useState<string>(currentEvent?.repeat?.intervalType ? periodRepeatItems[currentEvent.repeat.intervalType] : "Дней");
+    const [interval, setInterval] = useState<number>(currentEvent?.repeat?.interval ?? 1);
 
     return (
         <Modal onClose={props.onClose} style={{display: "block"}}>
@@ -90,6 +84,7 @@ export function EventModal(props: AddEventModalProps){
                 <InputView validationMessages={validateEndDate()} isTime={true} value={endTime} onValueChange={setEndTime}/>
                 <p>
                     <Toggle
+                        defaultChecked={showRepeatInterval}
                         onValueChange={setShowRepeatInterval}
                     >
                         Добавить интервал повторений
@@ -98,11 +93,11 @@ export function EventModal(props: AddEventModalProps){
                 {showRepeatInterval
                     &&
                     <>
-                        Повторять с интервалом <Input width={30}/> <Select items={periodRepeatItems} value={repeatPeriod} onValueChange={setRepeatPeriod}/>
+                        Повторять с интервалом <Input value={interval.toString()} onValueChange={(x) => setInterval(Number(x))} width={30}/> <Select items={periodRepeatItems} value={repeatPeriod} onValueChange={setRepeatPeriod}/>
                     </>}
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => {
+                <Button onClick={ async () => {
                     if (validateStartDate().length > 0
                         || validateEndDate().length > 0
                         || validateEmpty(name).length > 0
@@ -111,17 +106,22 @@ export function EventModal(props: AddEventModalProps){
                     const splitDate = date.split(".");
                     const splitStartTime = startTime.split(":");
                     const splitEndTime = endTime.split(":");
-                    props.onSave({
+                    await props.onSave({
                         title: name,
                         startDateTime: new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]), Number(splitStartTime[0]), Number(splitStartTime[1])),
                         endDateTime: new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]), Number(splitEndTime[0]), Number(splitEndTime[1])),
                         id: props.currentEvent?.id ?? crypto.randomUUID().toString(),
-                        repeat: props.currentEvent?.repeat ?? null
+                        repeat: showRepeatInterval ? {
+                            id: props.currentEvent?.repeat?.id ?? crypto.randomUUID().toString(),
+                            intervalType: periodRepeatItems.indexOf(repeatPeriod),
+                            interval: interval,
+                            dateEnd: new Date(2026, 12, 31),
+                            dateStart: new Date(Number(splitDate[2]), Number(splitDate[1]) - 1, Number(splitDate[0]), Number(splitStartTime[0]), Number(splitStartTime[1])),
+                        } : null
                     });
-                    reset();
                 }}>{currentEvent ? "Сохранить" : "Создать"}</Button>
                 {currentEvent &&
-                    <Button onClick={props.onDelete} style={{marginLeft: "60px"}} use={"danger"}>
+                    <Button onClick={ async () => props.onDelete!(currentEvent!.id)} style={{marginLeft: "60px"}} use={"danger"}>
                     Удалить событие
                     </Button>
                 }

@@ -22,7 +22,7 @@ public class ApplicationContext : DbContext
         {
             DatabaseName = "calendar",
             Host = "localhost",
-            Port = "5435",
+            Port = "5431",
             Password = "postgres",
             UserName = "postgres"
         };

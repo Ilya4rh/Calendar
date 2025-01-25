@@ -47,6 +47,13 @@ public class AuthenticationController: ControllerBase
         context.HttpContext.Response.Cookies.Append("Auth",token);
         return new AuthenticationUserResponse(authenticationResult, token);
     }
+    
+    [HttpGet]
+    public ActionResult LogOut()
+    {
+        context.HttpContext.Response.Cookies.Delete("Auth");
+        return Ok();
+    }
 
     [HttpGet]
     public ActionResult<bool> IsAuthenticated()

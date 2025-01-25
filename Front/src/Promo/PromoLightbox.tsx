@@ -40,14 +40,14 @@ export function PromoLightbox(props: LoginLightboxProps) {
             }
             const response = (await AuthenticationApi.authenticate(request)).data;
 
-            if (response.authorizationResult == AuthenticationApi.AuthenticationResult.Success){
+            if (response.authenticationResult == AuthenticationApi.AuthenticationResult.Success){
                 cookies.set("Auth", response.authToken);
                 navigate("/MainPage");
             }
 
-            if (response.authorizationResult === AuthenticationApi.AuthenticationResult.UserNotFound)
+            if (response.authenticationResult === AuthenticationApi.AuthenticationResult.UserNotFound)
                 newEmailValidations.push("Пользователь с такой электронной почтой не найден");
-            if (response.authorizationResult === AuthenticationApi.AuthenticationResult.WrongPassword)
+            if (response.authenticationResult === AuthenticationApi.AuthenticationResult.WrongPassword)
                 newPasswordValidations.push("Введен неверный пароль");
         }
         setEmailValidations(newEmailValidations);
