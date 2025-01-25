@@ -25,7 +25,12 @@ export function MainPage() {
                     return {
                         ...x,
                         startDateTime: new Date(x.startDateTime),
-                        endDateTime: new Date(x.endDateTime)
+                        endDateTime: new Date(x.endDateTime),
+                        repeat: x.repeat ? ({
+                            ...x.repeat,
+                            dateStart: new Date(x.repeat.dateStart),
+                            dateEnd: x.repeat.dateEnd ? new Date(x.repeat.dateEnd) : null,
+                        }) : null
                     }
                 }));
                 setIsLoading(false);

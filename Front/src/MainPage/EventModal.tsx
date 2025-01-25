@@ -59,7 +59,11 @@ export function EventModal(props: AddEventModalProps){
     }
 
     const periodRepeatItems = ['Дней', 'Недель', 'Месяцев', 'Лет'];
-    const [date, setDate] = useState<string>( currentEvent ? `${addTrailingZeroIfNeed(currentEvent.endDateTime.getDate())}.${addTrailingZeroIfNeed(currentEvent.endDateTime.getMonth() + 1)}.${currentEvent.endDateTime.getFullYear()}` : "");
+    const [date, setDate] = useState<string>( currentEvent ?
+        (currentEvent.repeat
+            ? `${addTrailingZeroIfNeed(currentEvent.repeat.dateStart.getDate())}.${addTrailingZeroIfNeed(currentEvent.repeat.dateStart.getMonth() + 1)}.${currentEvent.repeat.dateStart.getFullYear()}`
+            : `${addTrailingZeroIfNeed(currentEvent.endDateTime.getDate())}.${addTrailingZeroIfNeed(currentEvent.endDateTime.getMonth() + 1)}.${currentEvent.endDateTime.getFullYear()}`) :
+        "");
     const [startTime, setStartTime] = useState<string>(currentEvent ? `${addTrailingZeroIfNeed(currentEvent.startDateTime.getHours())}:${addTrailingZeroIfNeed(currentEvent.startDateTime.getMinutes())}` : "");
     const [endTime, setEndTime] = useState<string>(currentEvent ? `${addTrailingZeroIfNeed(currentEvent.endDateTime.getHours())}:${addTrailingZeroIfNeed(currentEvent.endDateTime.getMinutes())}` : "");
     const [name, setName] = useState<string>(currentEvent?.title ?? "");
@@ -76,7 +80,7 @@ export function EventModal(props: AddEventModalProps){
             <Modal.Body>
                 <p>Заголовок:</p>
                 <InputView validationMessages={validateEmpty(name)} value={name} onValueChange={setName}/>
-                <p>Дата события:</p>
+                <p>Дата начального события:</p>
                 <InputView isDate={true} validationMessages={validateEmpty(date)} value={date} onValueChange={setDate}/>
                 <p>Начало события:</p>
                 <InputView validationMessages={validateStartDate()} isTime={true} value={startTime} onValueChange={setStartTime}/>
