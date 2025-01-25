@@ -26,7 +26,7 @@ export namespace EventApi{
     }
 
     export function getEventsByCreatorIdForYear(year: number): Promise<AxiosResponse<EventDto[], number>> {
-        return axios.get("http://localhost:5031/Event/GetEventsForYear", { params: year, withCredentials: true });
+        return axios.get("http://localhost:5031/Event/GetEventsForYear", { params: {year: year}, withCredentials: true });
     }
 
     export function createEvent(request: EventDto): Promise<AxiosResponse<EventDto[], EventDto>> {
