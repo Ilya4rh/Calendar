@@ -4,7 +4,7 @@ namespace Core.Event.Interfaces;
 
 public interface IEventService
 {
-    List<EventDto> GetEventsForYear();
+    List<EventDto> GetEventsForYear(int year);
 
     Guid CreateEvent(EventDto eventDto);
 
