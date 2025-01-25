@@ -5,7 +5,6 @@ import {DateHelpers} from "../Common/DateHelpers";
 import {EventCard} from "./EventCard";
 import {EventModal} from "./EventModal";
 import {EventApi} from "../Apis/EventApi";
-import {AuthenticationApi} from "../Apis/AuthenticationApi";
 import {ExitButton} from "./ExitButton";
 
 export function MainPage() {
@@ -19,7 +18,8 @@ export function MainPage() {
     const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
     useEffect(() => {
-        EventApi.getEventsByCreatorIdForYear()
+        setIsLoading(true);
+        EventApi.getEventsByCreatorIdForYear(currentDate.getFullYear())
             .then(x => {
                 setEvents(x.data.map(x => {
                     return {
@@ -31,7 +31,7 @@ export function MainPage() {
                 setIsLoading(false);
             })
             .catch(e => console.log(e));
-    }, [])
+    }, [currentDate.getFullYear()])
 
     const timeConversion = (num: number) => {
         return num > 9 ? num + ":00" : "0" + num + ":00";

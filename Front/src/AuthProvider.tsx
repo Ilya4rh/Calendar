@@ -1,4 +1,4 @@
-import {useContext, createContext, ReactNode, useState, useEffect} from "react";
+import {useContext, createContext, ReactNode, useState, useEffect, Children} from "react";
 import {AuthenticationApi} from "./Apis/AuthenticationApi";
 import {Navigate} from "react-router-dom";
 import {Spinner} from "@skbkontur/react-ui";
@@ -14,7 +14,7 @@ const initialContext = {
 const AuthContext = createContext<IAuthContext>(initialContext);
 
 interface AuthProviderProps{
-    component: ReactNode
+    children: ReactNode;
 }
 function AuthProvider(props: AuthProviderProps) {
     const [authenticated, setAuthenticated] = useState<boolean | undefined>(undefined);
@@ -35,7 +35,7 @@ function AuthProvider(props: AuthProviderProps) {
         return <Navigate to={"/"}/>;
 
     if (authenticated === true)
-        return <AuthContext.Provider value={{authenticated}}>{props.component}</AuthContext.Provider>;
+        return<AuthContext.Provider value={{authenticated}}>{props.children}</AuthContext.Provider>;
     else
         return <></>;
 }

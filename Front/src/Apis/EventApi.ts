@@ -25,8 +25,8 @@ export namespace EventApi{
         intervalType: IntervalTypes
     }
 
-    export function getEventsByCreatorIdForYear(): Promise<AxiosResponse<EventDto[]>> {
-        return axios.get("http://localhost:5031/Event/GetEventsForYear", { withCredentials: true });
+    export function getEventsByCreatorIdForYear(year: number): Promise<AxiosResponse<EventDto[], number>> {
+        return axios.get("http://localhost:5031/Event/GetEventsForYear", { params: year, withCredentials: true });
     }
 
     export function createEvent(request: EventDto): Promise<AxiosResponse<EventDto[], EventDto>> {

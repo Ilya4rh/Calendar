@@ -9,14 +9,17 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-          <Route
-              path = '/'
-              element = {<Promo/>}
-          />
-          <Route
-              path="/MainPage"
-              element={<AuthProvider component={MainPage()}/>}
-          />
+          <Route path="/">
+              <Route index element={<Promo />} />
+              <Route
+                  path="/MainPage"
+                  element={
+                  <AuthProvider>
+                      <MainPage/>
+                  </AuthProvider>
+              }
+              />
+          </Route>
       </Routes>
     </BrowserRouter>
   );
