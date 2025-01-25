@@ -16,9 +16,9 @@ public class EventController: ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<EventDto>> GetEventsForYear()
+    public ActionResult<List<EventDto>> GetEventsForYear([FromQuery] int year)
     {
-        var events = eventService.GetEventsForYear();
+        var events = eventService.GetEventsForYear(year);
         
         return events;
     }

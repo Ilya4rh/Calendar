@@ -21,9 +21,9 @@ public class EventService : IEventService
         this.generator = generator;
     }
 
-    public List<EventDto> GetEventsForYear()
+    public List<EventDto> GetEventsForYear(int year)
     {
-        var events = eventRepository.GetEventsForYear();
+        var events = eventRepository.GetEventsForYear(year);
         var eventsDto = new List<EventDto>();
         
         foreach (var eventEntity in events)
